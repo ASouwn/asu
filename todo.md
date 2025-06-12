@@ -1,11 +1,13 @@
 # TODOLIST
 
-## 模仿next.js实现文件目录路由自动生成
+## 文件路由系统
 
-自动完成对src/main下目录page的渲染，用layout.tsx完成全局管理
+next app模式实现
 
-## 使用vite完成对modules目录下的组件打包
+## layout.tsx内容插槽传递
 
-自动完成打包工作并生成相应路由，用于前端调用
+使用layout.tsx管理全局布局
 
-## 开发中间层用于完成对路由模块的记录与懒加载
+## 服务端渲染或者客户端渲染html输出
+
+表现下来就是不需要index.html作为切入点
