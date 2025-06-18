@@ -5,7 +5,6 @@ import (
 	"fmt"
 	"log"
 	"net/http"
-	"os"
 	"os/exec"
 	"path/filepath"
 	"strings"
@@ -13,47 +12,29 @@ import (
 	"github.com/evanw/esbuild/pkg/api"
 )
 
-func fileExists(path string) bool {
-	_, err := os.Stat(path)
-	return err == nil || !os.IsNotExist(err)
-}
+func RouterInit(dir string) {
+	routers, layoutDP := dirSeek(dir)
 
-func dirSeek(dir string) (routers []string) {
-	// dfs for router files
-	err := filepath.WalkDir(dir, func(path string, d os.DirEntry, err error) error {
-		if err != nil {
-			return err
-		}
-		if d.IsDir() {
-			pagePath := filepath.Join(path, "page.tsx")
-			if fileExists(pagePath) {
-				routers = append(routers, path)
-			}
-		}
-		return nil
-	})
-	if err != nil {
-		panic("Error walking directory: " + err.Error())
+	for path, layouts := range layoutDP {
+		log.Println("Layout path:", path)
+		log.Println("Layouts found:", layouts)
 	}
 
-	return routers
-}
-
-func RouterInit(dir string) {
-	routers := dirSeek(dir)
 	if len(routers) == 0 {
 		panic("No router found")
 	}
 
+	// create router for each directory that contains a page.tsx file
 	for _, router := range routers {
-		pageDir := strings.Split(router, "\\")
-		log.Println("Router path:", router)
-		// root router, its path is ../../src/app
-		// so the length is 4
+		pageDir := strings.Split(router, "/")
 		routePath := "/"
+		// because the router is a directory, we need to remove the last part of the path
+		// just like the path ./src/app/ the path is src/app, the router is "/"
+		// so we need to remove the first two parts of the path
 		if len(pageDir) > 2 {
 			routePath += strings.Join(pageDir[2:], "/")
 		}
+		log.Println("Route path:", routePath)
 		http.HandleFunc(routePath, func(w http.ResponseWriter, r *http.Request) {
 			result := api.Build(api.BuildOptions{
 				EntryPoints: []string{filepath.Join(router, "layout.tsx")},
