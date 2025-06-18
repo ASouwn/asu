@@ -1,11 +1,9 @@
 package main
 
 import (
-	"fmt"
-	"net/http"
 	"os"
 
-	"github.com/ASouwn/asu/src-asu/router"
+	srcasu "github.com/ASouwn/asu/src-asu"
 )
 
 func main() {
@@ -13,11 +11,8 @@ func main() {
 	if len(os.Args) > 1 {
 		port = os.Args[1]
 	}
-
-	router.RouterInit("./src/app")
-	fmt.Printf("Starting server on port http://localhost:%s ...\n", port)
-	err := http.ListenAndServe(":"+port, nil)
-	if err != nil {
-		fmt.Println("Error starting server:", err)
-	}
+	// the input dir will decide the root rout "/"
+	// its ok to use ./path or /path, even ./path/../path2 to replace /path2
+	// also "/" and "\\" will be fine
+	srcasu.ASUStart("./src/app", port)
 }

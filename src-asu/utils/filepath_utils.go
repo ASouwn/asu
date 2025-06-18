@@ -39,3 +39,12 @@ func dfsWalkDir(path string, d fs.DirEntry, walkDirFn fs.WalkDirFunc) error {
 	}
 	return nil
 }
+
+// fileExists checks if a file exists at the given path
+//
+// Returns:
+//   - true if the file exists
+func fileExists(path string) bool {
+	_, err := os.Stat(path)
+	return err == nil || !os.IsNotExist(err)
+}
