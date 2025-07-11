@@ -14,5 +14,5 @@ func main() {
 	// the input dir will decide the root rout "/"
 	// its ok to use ./path or /path, even ./path/../path2 to replace /path2
 	// also "/" and "\\" will be fine
-	srcasu.ASUStart("./src/app", port)
+	srcasu.ASUStart(port)
 }

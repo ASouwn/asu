@@ -2,7 +2,6 @@ package utils
 
 import (
 	"io/fs"
-	"log"
 	"os"
 	"path/filepath"
 	"strings"
@@ -51,7 +50,7 @@ func DirSeek(dir string) (routers []string, layoutDP map[string][]string) {
 			// log.Println("try to build router and layout tree for [path]-", path)
 
 			pagePath := filepath.Join(path, "page.tsx")
-			log.Println("pagePath:", pagePath)
+			// log.Println("pagePath:", pagePath)
 			if fileExists(pagePath) {
 				routers = append(routers, path)
 			}
