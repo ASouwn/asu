@@ -19,8 +19,9 @@ import (
 //   - dir: the frontend files root dir, also the root rout start at.
 //     like input ./src/app, the dir ./src/app/main with page.tsx will be found on rout /main
 //   - port: the port the frontend server start at.
-func ASUStart(dir, port string) {
-	rootdir := filepath.ToSlash(filepath.Clean(dir))
+func ASUStart(port string) {
+	rootdir := filepath.ToSlash(filepath.Clean("./src/app"))
+	// Change the working directory to the rootdir
 	// Scan the frontend directory and return directories containing page.tsx and layout.tsx
 	routers, _ := utils.DirSeek(rootdir)
 	if len(routers) == 0 {

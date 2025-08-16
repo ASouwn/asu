@@ -30,6 +30,7 @@ func SSRRender(router string) string {
 			".tsx": api.LoaderTSX,
 			".ts":  api.LoaderTS,
 			".js":  api.LoaderJS,
+			".jsx": api.LoaderJSX,
 		},
 		External: []string{"react", "react-dom", "react-dom/server"},
 	})
