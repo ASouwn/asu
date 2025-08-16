@@ -51,7 +51,7 @@ func DirSeek(dir string) (routers []string, layoutDP map[string][]string) {
 
 			pagePath := filepath.Join(path, "page.tsx")
 			// log.Println("pagePath:", pagePath)
-			if fileExists(pagePath) {
+			if FileExists(pagePath) {
 				routers = append(routers, path)
 			}
 
@@ -64,7 +64,7 @@ func DirSeek(dir string) (routers []string, layoutDP map[string][]string) {
 			} else {
 				layoutDP[path] = []string{}
 			}
-			if fileExists(layoutPath) {
+			if FileExists(layoutPath) {
 				layoutDP[path] = append(layoutDP[path], path)
 			}
 		}
@@ -75,4 +75,17 @@ func DirSeek(dir string) (routers []string, layoutDP map[string][]string) {
 	}
 
 	return routers, layoutDP
+}
+
+func FilepathFormat(path string) string {
+	return filepath.ToSlash(filepath.Clean(path))
+}
+
+// FileExists checks if a file exists at the given path
+//
+// Returns:
+//   - true if the file exists
+func FileExists(path string) bool {
+	_, err := os.Stat(path)
+	return err == nil || !os.IsNotExist(err)
 }
